@@ -16,7 +16,7 @@ void ShellSort(T ar[],int n,bool (*prior)(T const&,T const&))
 
 //move shell sort
 template<typename T>
-void ShellSort_move(T ar[],int n,bool (*prior)(T const&,T const&))
+void ShellSort_Move(T ar[],int n,bool (*prior)(T const&,T const&))
 {
 	for(int gap = n/2;gap > 0;gap/=2)//gap 间距
 		for(int j = 0;j < gap;++j)//对每个子序列进行插入排序

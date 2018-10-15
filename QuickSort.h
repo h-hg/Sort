@@ -2,28 +2,32 @@
 #ifndef QUICKSORT_H_
 #define QUICKSORT_H_
 
-void QuickSort(int array[],int begin,int end)
+template<typename T>
+int partition(T ar[],int left,int right,bool(*prior)(T const&,T const&))//划分两个部分，并返回轴值所在的下标，(left,right)
 {
-	if(begin >= end)
-		return;
-	int i = begin,j = end,key = array[i];//key 充当分界点
-	while(i < j)
-	{
-		while(i < j && array[j] >= key)
-			--j;
-		array[i] = array[j];//小的复制到前面，第一次将key覆盖掉，内容中有多出的array[j]的值
-		while(i < j && array[i] <= key)
-			++i;
-		array[j] = array[i];//大的复制到后面，覆盖掉前面多出的array[j]的值
-	}
-	array[i] = key;//此时i = j，填补 第一次将key的值覆盖掉
-	QuickSort(array,begin,i - 1);
-	QuickSort(array,i + 1,end);
+	int pivotIndex = (left + right) / 2;//use mid as the pivot index, a random value will be better, but it may cause more time to produce it
+	T pivot = ar[pivotIndex];
+	std::swap(ar[right],ar[pivotIndex]);//put the pivot at the end
+	//the follow steps is partitioning the array and finding the final pivot index (vaiable l is it).
+	int l = left - 1,r = right;//(l,r)
+	do{
+		while(prior(ar[++l],pivot));
+		while(l < r && prior(pivot,ar[--r]));
+		std::swap(ar[l],ar[r]);
+	}while(l < r);
+	std::swap(ar[l],ar[right]);//put the pivot at the pivot index
+	return l;
 }
 
 template <typename T>
-void QuickSort(T ar[],int left,int right,bool(*prior)(T const&,T const&))
+void QuickSort(T ar[],int left,int right,bool(*prior)(T const&,T const&))//[left,right]
 {
-
+	if(left >= right)//don't sort 0 or 1 elements
+		return;
+	int pivotIndex = partition(ar,left,right,prior);//partition the arary and get the index of pivot
+	QuickSort(ar,left,pivotIndex-1,prior);//sort the left subarray
+	QuickSort(ar,pivotIndex+1,right,prior);//sort the right subarray
 }
+
+
 #endif

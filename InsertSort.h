@@ -13,7 +13,7 @@ void InsertSort(T ar[],int n,bool (*prior)(T const&,T const&))
 
 //move swap insertsort
 template <typename T>
-void InsertSort_move(T ar[],int n,bool (*prior)(T const&,T const&))
+void InsertSort_Move(T ar[],int n,bool (*prior)(T const&,T const&))
 {
 
 	for(int i = 1;i < n;++i)

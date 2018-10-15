@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstring>
 #ifndef MERGESORT_H_
 #define MERGESORT_H_
 
@@ -11,7 +12,7 @@ void MergeSort(T ar[],T temp[],int left,int right,bool (*prior)(T const&,T const
 		int mid = (left + right) / 2;
 		MergeSort(ar,temp,left,mid,prior);//[left,mid]
 		MergeSort(ar,temp,mid+1,right,prior);//[mid+1,right]
-		//the follow steps is Merge
+		//the follow steps is Merge, the function of temp array is that copy ar to temp, store the result in ar.
 		for(int i = left;i <= mid;++i)
 			temp[i] = ar[i];
 		for(int i = mid+1;i <= right;++i)//倒置存入
@@ -51,9 +52,9 @@ void MergeSort2(int array[],int TempArray[],int begin,int end)
 	if(begin < end)
 	{
 		int middle = (begin + end) / 2;
-		MergeSort(array,TempArray,begin,middle);
-		MergeSort(array,TempArray,middle+1,end);
-		Merge(array,TempArray,begin,middle,end);
+		MergeSort2(array,TempArray,begin,middle);
+		MergeSort2(array,TempArray,middle+1,end);
+		Merge2(array,TempArray,begin,middle,end);
 	}
 }
 
